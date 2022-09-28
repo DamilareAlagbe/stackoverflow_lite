@@ -13,8 +13,16 @@ const addQuestion = async (req, res) => {
   res.status(200).send(Question);
 };
 
+// get all questions
+const getQuestions = async (req, res) => {
+    let Questions = await models.question.findAll({});
+    res.status(200).send(Questions);
+  };
+
 
 module.exports = {
-  addQuestion
+  addQuestion,
+  getQuestions,
+
  
 };
