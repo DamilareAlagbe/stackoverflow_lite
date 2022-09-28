@@ -52,4 +52,33 @@ describe("user Api", () => {
       response.body.should.have.property("email").eq("emmanuel@gmail.com");
     });
   });
-})
+
+  
+  // ** test the login route
+describe("POST /Api/v1/users/login", () => {
+    const user = {
+      email: "emmanuel@gmail.com",
+      password: "dami123",
+    };
+  
+    before("set up", () => {
+      const userFindone = sandbox.stub(models.user, "findOne");
+      user.id = 6;
+      userFindone.withArgs({ where: { email: user.email } }).returns(userModel);
+      userFindone.returns(null);
+    });
+  
+    after("remove stub", () => {
+      sandbox.restore();
+    });
+  
+    it("it should login a user", async () => {
+      let response = await chai.request(server).post("/Api/v1/users/login").send(user);
+      response.should.have.status(200);
+      response.body.should.be.a("object");
+      response.body.should.have.property("id").eq(6);
+      response.body.should.have.property("email").eq("emmanuel@gmail.com");
+    });
+  });
+  
+});
