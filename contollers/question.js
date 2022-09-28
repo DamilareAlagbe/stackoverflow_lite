@@ -36,12 +36,23 @@ const getOneQuestion = async (req, res) => {
     res.status(200).send(Questions);
   };
   
+// delete a question
+  const deleteQuestion = async (req, res) => {
+    let id = req.params.id;
+    let userId = req.user;
+    let affectedRows = await models.question.destroy({
+      where: { id, user_id: userId },
+    });
+    if (!affectedRows) return res.status(400).send("Id is not recognized");
+    res.status(200).send("Question is deleted");
+  };
 
 module.exports = {
   addQuestion,
   getQuestions,
   getOneQuestion,
   getUserquestions,
+  deleteQuestion,
 
  
 };
