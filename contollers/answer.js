@@ -65,12 +65,27 @@ const getUpvote = async (req, res) => {
     );
     res.status(200).send();
   };
+
+
+  //downvote an answer 
+const getDownvote = async (req, res) => {
+    let id = req.params.id;
+    const answer = await models.answer.findOne(
+      { attributes: ["downvote"] },
+      { where: { id: id } }
+    );
+    const resultVote = await models.answer.update(
+      { downvote: answer.downvote + 1 },
+      { where: { id: id } }
+    );
+    res.status(200).send();
+  };
   
 module.exports = {
   addAnswer,
   getAnswers,
   acceptanswer,
-  getUpvote
-
+  getUpvote,
+  getDownvote
 };
 
