@@ -52,11 +52,25 @@ const acceptanswer = async (req, res) => {
   };
   
 
-
+//upvote an answer 
+const getUpvote = async (req, res) => {
+    let id = req.params.id;
+    const answer = await models.answer.findOne(
+      { attributes: ["upvote"] },
+      { where: { id: id } }
+    );
+    const resultVote = await models.answer.update(
+      { upvote: answer.upvote + 1 },
+      { where: { id: id } }
+    );
+    res.status(200).send();
+  };
+  
 module.exports = {
   addAnswer,
   getAnswers,
   acceptanswer,
+  getUpvote
 
 };
 
