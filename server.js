@@ -3,6 +3,12 @@ const express = require("express");
 const app = express();
 
 
+if (!config.get("jwtPrivateKey")) {
+    console.log("FATAL ERROR : jwtprivatekey is not defined.");
+    process.exit(1);
+  }
+
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
