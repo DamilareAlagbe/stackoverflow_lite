@@ -33,7 +33,7 @@ const addUser = async (req, res) => {
       .header("x-auth-token", token)
       .send(_.pick(User, ["id", "first_name", "email", "last_name"]));
   }catch(err){
-    console.log('error:',err)
+    res.status(400).send(err.message)
   }
 };
 
@@ -52,7 +52,7 @@ const loginUser = async (req, res) => {
     res.status(200).send(pick);
   }
   catch(err){
-    console.log('error:',err)
+    res.status(400).send(err.message)
   }
 };
 
@@ -64,7 +64,7 @@ const currentUser = async ( req,res)=> {
   const User = await models.user.findAll({where : {id : id}})
   res.send(User)
 }catch(err){
-  console.log('error:',err)
+  res.status(400).send(err.message)
 }}
 
 
