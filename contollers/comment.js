@@ -25,11 +25,20 @@ const getComments = async (req, res) => {
   };
 
 
+ // delete comment
+const deleteComment = async (req, res) => {
+    let id = req.params.id;
+    let Comment = await models.comment.destroy({ where: { id: id } });
+    res.status(200).send("Comment is deleted");
+  };
+
+
 
 
 
 module.exports = {
     addComment,
-    getComments
+    getComments,
+    deleteComment
   };
   
