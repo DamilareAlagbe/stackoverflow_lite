@@ -9,6 +9,7 @@ const userschema = Joi.object({
 
 const questionschema = Joi.object({
   question: Joi.string().required(),
+  user_id: Joi.number().integer()
 });
 
 const answerschema = Joi.object({

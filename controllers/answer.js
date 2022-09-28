@@ -41,7 +41,7 @@ const acceptanswer = async (req, res) => {
       res.send("user not allowed");
     }
     const resultVote = await models.answer.update(
-      { accepted_answer: false },
+      { accepted_answer: true },
       { where: { id: answer_id } }
     );
     if (resultVote[0] < 1) {
@@ -78,7 +78,7 @@ const getDownvote = async (req, res) => {
       { downvote: answer.downvote + 1 },
       { where: { id: id } }
     );
-    res.status(200).send();
+   return res.status(200).send();
   };
   
 module.exports = {
