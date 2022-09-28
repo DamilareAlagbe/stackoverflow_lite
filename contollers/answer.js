@@ -18,7 +18,20 @@ const addAnswer = async (req, res) => {
 };
 
 
+//get all Answer to a question
+const getAnswers = async (req, res) => {
+    let question_id = req.params.id;
+    let Answers = await models.answer.findAll({
+      where: { question_id: question_id },
+    });
+    res.status(200).send(Answers);
+  };
+  
+
+
 module.exports = {
-  addAnswer
+  addAnswer,
+  getAnswers,
+
 };
 
