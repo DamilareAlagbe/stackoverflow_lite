@@ -16,11 +16,20 @@ const addComment = async (req, res) => {
 };
 
 
+// get comment
+const getComments = async (req, res) => {
+    let answerId = req.params.id
+    let Comments = await models.comment.findAll({where : {answer_id :answerId}});
+  
+    res.status(200).send(Comments);
+  };
+
 
 
 
 
 module.exports = {
-    addComment
+    addComment,
+    getComments
   };
   
