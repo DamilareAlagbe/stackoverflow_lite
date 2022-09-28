@@ -20,9 +20,18 @@ const getQuestions = async (req, res) => {
   };
 
 
+  // get a question
+const getOneQuestion = async (req, res) => {
+    let id = req.params.id;
+    let Question = await models.question.findByPk(id);
+    res.status(200).send(Question);
+  };
+  
+
 module.exports = {
   addQuestion,
   getQuestions,
+  getOneQuestion,
 
  
 };
