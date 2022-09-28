@@ -48,7 +48,17 @@ const loginUser = async (req, res) => {
 };
 
 
+// get current user 
+const currentUser = async ( req,res)=> {
+ 
+  let id = req.user
+  const User = await models.user.findAll({where : {id : id}})
+  res.send(User)
+}
+
+
 module.exports = {
   addUser,
-  loginUser
+  loginUser,
+  currentUser
 };
