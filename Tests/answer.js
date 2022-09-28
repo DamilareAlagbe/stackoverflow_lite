@@ -51,4 +51,29 @@ describe("question Api", () => {
         response.body.should.have.property("user_id").eq(2);
       });
     })
+
+    //get all answers to a question
+    describe('Get /answer', ()=>{
+        const answerEntry = []
+  
+      before('set up', ()=> {
+        const answerdb = sandbox.stub(models.answer,'findAll')
+        answerdb.withArgs({where : {question_id : answerModel.question_id}}).returns(answerEntry)
+      })
+  
+      after('remove stub', ()=>{
+        sandbox.restore()
+      })
+  
+      it('should get all answer to a question', async ()=> {
+        let response = await chai
+        .request(server)
+        .post(`/Api/v1/questions/${answerModel.question_id}/answer`)
+        .set("x-auth-token", validToken)
+        .send(answerEntry)
+        response.should.have.status(200)
+        response.should.be.a('object')
+      
+        })
+    })
 })
