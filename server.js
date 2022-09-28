@@ -2,6 +2,8 @@ const config = require("config");
 const express = require("express");
 const user = require("./routes/user");
 const question = require("./routes/question");
+const answer = require("./routes/answer");
+const comment = require("./routes/comment");
 const app = express();
 
 
@@ -20,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/Api/v1/users", user);
 app.use("/Api/v1/questions", question);
 app.use("/Api/v1/", answer);
+app.use("/Api/v1", comment);
 
 
 const PORT = process.env.PORT || 3000;
