@@ -57,4 +57,43 @@ it('should add a new comment', async ()=>{
 
 })
     })
+
+    // get a comment
+    describe('GET /comment', ()=>{
+        let allComment = []
+    
+            before('add stub', ()=>{
+               answerId = '2'
+               commentdb =  sandbox.stub(models.comment,'findAll')
+               commentdb.withArgs({where : {answer_id :answerId}})
+               commentdb.returns(allComment)
+            })
+            
+            after('remove stub', ()=> {
+                sandbox.restore()
+            })
+    
+            it("should fail if invalid token is passed ", async () => {
+                let response = await chai
+                  .request(server)
+                  .get(`/answer/${commentModel.answer_id}/comment`)
+                  .set("x-auth-token", invalidToken)
+                  .send(allComment);
+                response.should.have.status(400);
+              });
+            
+
+            it("should get all comments to an answer ", async () => {
+                let response = await chai
+                  .request(server)
+                  .get(`/answer/${commentModel.answer_id}/comment`)
+                  .set("x-auth-token", validToken)
+                  .send(allComment);
+            
+                response.should.have.status(200)
+                response.body.should.be.an('array')
+              });
+            
+           
+                })
 })
