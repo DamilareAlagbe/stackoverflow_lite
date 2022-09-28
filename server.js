@@ -1,5 +1,6 @@
 const config = require("config");
 const express = require("express");
+const user = require("./routes/user");
 const app = express();
 
 
@@ -13,6 +14,9 @@ if (!config.get("jwtPrivateKey")) {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+
+app.use("/Api/v1/users", user);
 
 
 const PORT = process.env.PORT || 3000;
