@@ -98,4 +98,60 @@ describe("GET /questions/:id", () => {
       response.body.should.have.property("user_id").eq(7);
     });
   });
+
+// delete question
+describe("DELETE /question", () => {
+    const invalidId = '0';
+    const validId = '2';
+    const validUserId = 7;
+  
+    before("Setting stubs", () => {
+      const deleteQuestionStub = sandbox.stub(models.question, "destroy");
+  
+      deleteQuestionStub
+        .withArgs({
+          where: { id: validId, user_id: validUserId },
+        })
+        .returns(1);
+      deleteQuestionStub.returns(0);
+    });
+  
+    after("Removing stubs", () => {
+      sandbox.restore();
+    });
+  
+    // should fail if param id is invalid
+    // should return 200 if id is valid
+  
+    it("should fail if param id is invalid", async () => {
+      let response = await chai
+        .request(server)
+        .delete("Api/v1/questions/" + invalidId)
+        .set("x-auth-token", validToken)
+        .send();
+  
+      response.should.have.status(400);
+    });
+  
+    it("should fail if owner id is invalid", async () => {
+      let response = await chai
+        .request(server)
+        .delete("Api/v1/questions/" + invalidId)
+        .set("x-auth-token", invalidId)
+        .send();
+  
+      response.should.have.status(400);
+    });
+  
+    it("should pass if owner id is valid", async () => {
+      let response = await chai
+        .request(server)
+        .delete("Api/v1/questions/" + validId)
+        .set("x-auth-token", validToken)
+        .send();
+  
+      response.should.have.status(200);
+    });
+
+  });
 })
