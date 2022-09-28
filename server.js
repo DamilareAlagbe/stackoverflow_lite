@@ -19,10 +19,10 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
-app.use("/Api/v1/users", user);
-app.use("/Api/v1/questions", question);
-app.use("/Api/v1/", answer);
-app.use("/Api/v1", comment);
+app.use("/api/v1/users", user);
+app.use("/api/v1/questions", question);
+app.use("/api/v1/", answer);
+app.use("/api/v1", comment);
 
 
 const PORT = process.env.PORT || 3000;
