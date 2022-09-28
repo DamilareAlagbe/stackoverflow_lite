@@ -27,11 +27,21 @@ const getOneQuestion = async (req, res) => {
     res.status(200).send(Question);
   };
   
+  // get all questions by a user
+  const getUserquestions = async (req, res) => {
+    user_id = req.user;
+    const Questions = await models.question.findAll({
+      where: { user_id: user_id },
+    });
+    res.status(200).send(Questions);
+  };
+  
 
 module.exports = {
   addQuestion,
   getQuestions,
   getOneQuestion,
+  getUserquestions,
 
  
 };
