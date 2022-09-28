@@ -50,4 +50,52 @@ describe("question Api", () => {
       response.body.should.have.property("user_id").eq(7);
     });
   });
+// get all questions
+
+describe("GET /questions", () => {
+    const questionEntry = [];
+
+    before("set up", () => {
+      const questiondb = sandbox.stub(models.question, "findAll");
+      questiondb.returns(questionEntry);
+    });
+
+    after("remove stub", () => {
+      sandbox.restore();
+    });
+
+    it("it should get all questions", async () => {
+      let response = await chai
+        .request(server)
+        .get("/Api/v1/questions/").set('x-auth-token', validToken)
+        .send(questionEntry);
+      response.should.have.status(200);
+      response.body.should.be.an("array");
+    });
+
+});
+
+// get question by id
+describe("GET /questions/:id", () => {
+    before("set up", () => {
+      const userdb = sandbox.stub(models.question, "findByPk");
+      userdb.withArgs(questionModel.id).returns(questionModel);
+    });
+  
+    after("remove stub", () => {
+      sandbox.restore();
+    });
+  
+    it("it should get a  question by id", async () => {
+      let response = await chai
+        .request(server)
+        .get("Api/v1/questions" + questionModel.id).set('x-auth-token',validToken)
+        .send();
+      response.should.have.status(200);
+      response.body.should.be.a("object");
+      response.body.should.have.property("id").eq("4");
+      response.body.should.have.property("question").eq("how are you?");
+      response.body.should.have.property("user_id").eq(7);
+    });
+  });
 })
