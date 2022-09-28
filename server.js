@@ -2,6 +2,7 @@ const config = require("config");
 const express = require("express");
 const user = require("./routes/user");
 const question = require("./routes/question");
+const answer = require("./routes/answer");
 const app = express();
 
 
