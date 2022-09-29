@@ -5,7 +5,11 @@
   "main": "server.js",
   "scripts": {
     "test": "nyc --reporter=text mocha",
-    "coverage" :"nyc report --reporter=text-lcov | coveralls"
+    "coverage" :"nyc report --reporter=text-lcov | coveralls",
+    "start" : "node server.js"
+  },
+  "engines": {
+    "node": "v16.17.0"
   },
   "author": "Alagbe Damilare",
   "license": "ISC",

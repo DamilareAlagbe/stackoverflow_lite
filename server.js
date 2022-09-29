@@ -20,6 +20,8 @@ app.use("/api/v1", answer);
 app.use("/api/v1", comment);
 
 
+require('./startup/prod')(app);
+
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
