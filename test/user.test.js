@@ -19,7 +19,7 @@ describe("user Api", () => {
   // ** test the sign up route
   //
 
-  describe("POST /Api/v1/users/signup", () => {
+  describe("POST /api/v1/users/signup", () => {
     const user = {
       first_name: "Alagbe",
       last_name: "Damilare",
@@ -42,7 +42,7 @@ describe("user Api", () => {
     it("it should post a new user", async () => {
       let response = await chai
         .request(server)
-        .post("/Api/v1/users/signup")
+        .post("/api/v1/users/signup")
         .send(user);
       response.should.have.status(200);
       response.body.should.be.a("object");
@@ -55,7 +55,7 @@ describe("user Api", () => {
 
   
   // ** test the login route
-describe("POST /Api/v1/users/login", () => {
+describe("POST /api/v1/users/login", () => {
     const user = {
       email: "emmanuel@gmail.com",
       password: "dami123",
@@ -73,7 +73,7 @@ describe("POST /Api/v1/users/login", () => {
     });
   
     it("it should login a user", async () => {
-      let response = await chai.request(server).post("/Api/v1/users/login").send(user);
+      let response = await chai.request(server).post("/api/v1/users/login").send(user);
       response.should.have.status(200);
       response.body.should.be.a("object");
       response.body.should.have.property("id").eq(6);
