@@ -12,8 +12,6 @@ const addAnswer = async (req, res) => {
       downvote: 0,
     };
     const result = await answerschema.validateAsync(info);
-  
-    // console.log('result', result)
     let Answer = await models.answer.create(result);
     res.status(200).send(Answer);
   }catch(err){
