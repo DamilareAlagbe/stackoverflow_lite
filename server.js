@@ -6,24 +6,18 @@ const answer = require("./routes/answer");
 const comment = require("./routes/comment");
 const app = express();
 
-
 if (!config.get("jwtPrivateKey")) {
-    console.log("FATAL ERROR : jwtprivatekey is not defined.");
-    process.exit(1);
-  }
-
-
+  console.log("FATAL ERROR : jwtprivatekey is not defined.");
+  process.exit(1);
+}
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-
 app.use("/api/v1/users", user);
 app.use("/api/v1/questions", question);
-app.use("/api/v1/", answer);
+app.use("/api/v1", answer);
 app.use("/api/v1", comment);
-
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {

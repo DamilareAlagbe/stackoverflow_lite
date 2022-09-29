@@ -91,7 +91,7 @@ describe("Comment Api", () => {
       response.body.should.be.an("array");
     });
   });
-  
+
   // delete comment
   describe("DELETE /comment", () => {
     const validId = "2";
@@ -102,9 +102,9 @@ describe("Comment Api", () => {
       const deletecommentStub = sandbox.stub(models.comment, "destroy");
 
       deletecommentStub
-      .withArgs({
-        where: { id: validId, user_id: validUserId },
-      })
+        .withArgs({
+          where: { id: validId, user_id: validUserId },
+        })
         .returns(1);
       deletecommentStub.returns(0);
     });
@@ -113,13 +113,12 @@ describe("Comment Api", () => {
       sandbox.restore();
     });
 
-
     it("should fail if token is invalid", async () => {
       let response = await chai
         .request(server)
         .delete("/api/v1/comment/" + validId)
         .set("x-auth-token", invalidToken)
-        .send('invalid token');
+        .send("invalid token");
 
       response.should.have.status(400);
     });
@@ -129,7 +128,7 @@ describe("Comment Api", () => {
         .request(server)
         .delete("/api/v1/comment/" + validId)
         .set("x-auth-token", validToken)
-        .send('comment deleted');
+        .send("comment deleted");
 
       response.should.have.status(200);
     });
