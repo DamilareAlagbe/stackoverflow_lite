@@ -6,6 +6,10 @@ const models = require("../models");
 const { answerschema } = require("../validation");
 
 
+//assertion style
+chai.should();
+chai.use(chaiHttp);
+
 const answerModel = {
     answer: 'nice one!',
     id : 1,
@@ -17,9 +21,9 @@ const answerModel = {
 
 
 const validToken =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjY0MTM4OTc4fQ.VHPWsLQYyUzta-4zxba8xvJ7Mt-fRakm2CjnCqDfCrI";
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjY0NDQwMTA5fQ.18vkUgwpoe901S-n9SWUhwpeY_AZYDdl9aAXigcd--M";
 
-describe("question Api", () => {
+describe("answer Api", () => {
     // ** post a question route
     //
     describe("POST /answer", () => {
@@ -41,7 +45,7 @@ describe("question Api", () => {
       it("it should post a new answer", async () => {
         let response = await chai
           .request(server)
-          .post(`Api/v1/questions/${answerModel.question_id}/answer`)
+          .post(`/api/v1/questions/${answerModel.question_id}/answer`)
           .set("x-auth-token", validToken)
           .send(answerEntry);
         response.should.have.status(200);
@@ -68,7 +72,7 @@ describe("question Api", () => {
       it('should get all answer to a question', async ()=> {
         let response = await chai
         .request(server)
-        .post(`/Api/v1/questions/${answerModel.question_id}/answer`)
+        .get(`/api/v1/questions/${answerModel.question_id}/answer`)
         .set("x-auth-token", validToken)
         .send(answerEntry)
         response.should.have.status(200)
@@ -77,3 +81,4 @@ describe("question Api", () => {
         })
     })
 })
+

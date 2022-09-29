@@ -34,7 +34,7 @@ describe("Comment Api", () => {
     it("should fail if invalid token is passed ", async () => {
       let response = await chai
         .request(server)
-        .post(`Api/v1/answer/${commentModel.answer_id}/comment`)
+        .post(`/api/v1/answer/${commentModel.answer_id}/comment`)
         .set("x-auth-token", invalidToken)
         .send();
 
@@ -47,7 +47,7 @@ describe("Comment Api", () => {
       };
       let response = await chai
         .request(server)
-        .post(`Api/v1/answer/${commentModel.answer_id}/comment`)
+        .post(`/api/v1/answer/${commentModel.answer_id}/comment`)
         .set("x-auth-token", validToken)
         .send(commentSample);
       response.should.have.status(200);
@@ -74,7 +74,7 @@ describe("Comment Api", () => {
     it("should fail if invalid token is passed ", async () => {
       let response = await chai
         .request(server)
-        .get(`Api/v1/answer/${commentModel.answer_id}/comment`)
+        .get(`/api/v1/answer/${commentModel.answer_id}/comment`)
         .set("x-auth-token", invalidToken)
         .send(allComment);
       response.should.have.status(400);
@@ -83,7 +83,7 @@ describe("Comment Api", () => {
     it("should get all comments to an answer ", async () => {
       let response = await chai
         .request(server)
-        .get(`Api/v1/answer/${commentModel.answer_id}/comment`)
+        .get(`/api/v1/answer/${commentModel.answer_id}/comment`)
         .set("x-auth-token", validToken)
         .send(allComment);
 
@@ -94,18 +94,17 @@ describe("Comment Api", () => {
   
   // delete comment
   describe("DELETE /comment", () => {
-    const id = 3;
     const validId = "2";
-    const invalidId = 100;
+    const validUserId = 2;
 
     before("Setting stubs", () => {
       let id = "3";
-      const deletecommentStub = sandbox.stub(models.question, "destroy");
+      const deletecommentStub = sandbox.stub(models.comment, "destroy");
 
       deletecommentStub
-        .withArgs({
-          where: { id: id },
-        })
+      .withArgs({
+        where: { id: validId, user_id: validUserId },
+      })
         .returns(1);
       deletecommentStub.returns(0);
     });
@@ -114,25 +113,13 @@ describe("Comment Api", () => {
       sandbox.restore();
     });
 
-    // should fail if param id is invalid
-    // should return 200 if id is valid
-
-    it("should fail if param id is invalid", async () => {
-      let response = await chai
-        .request(server)
-        .delete("Api/v1/comment/" + invalidId)
-        .set("x-auth-token", validToken)
-        .send();
-
-      response.should.have.status(400);
-    });
 
     it("should fail if token is invalid", async () => {
       let response = await chai
         .request(server)
-        .delete("Api/v1/comment/" + validId)
+        .delete("/api/v1/comment/" + validId)
         .set("x-auth-token", invalidToken)
-        .send();
+        .send('invalid token');
 
       response.should.have.status(400);
     });
@@ -140,9 +127,9 @@ describe("Comment Api", () => {
     it("should pass if token is valid", async () => {
       let response = await chai
         .request(server)
-        .delete("Api/v1/comment/" + validId)
+        .delete("/api/v1/comment/" + validId)
         .set("x-auth-token", validToken)
-        .send();
+        .send('comment deleted');
 
       response.should.have.status(200);
     });

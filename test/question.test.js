@@ -12,11 +12,11 @@ chai.use(chaiHttp);
 const questionModel = {
   id: "4",
   question: "how are you?",
-  user_id: 7,
+  user_id: 2,
 };
 
-const validToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjY0MTM4OTc4fQ.VHPWsLQYyUzta-4zxba8xvJ7Mt-fRakm2CjnCqDfCrI";
+const validToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjY0NDQwMTA5fQ.18vkUgwpoe901S-n9SWUhwpeY_AZYDdl9aAXigcd--M"
+  
 const invalidToken =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjY0MjgxOTc2fQ.jjbCHR7LiZyWs8OfERXHotSj_Zaz3lRgc8ndo4bWXP0";
 describe("question Api", () => {
@@ -40,14 +40,14 @@ describe("question Api", () => {
     it("it should post a new question", async () => {
       let response = await chai
         .request(server)
-        .post("Api/v1/questions")
+        .post("/api/v1/questions")
         .set("x-auth-token", validToken)
         .send(questionEntry);
       response.should.have.status(200);
       response.body.should.be.a("object");
       response.body.should.have.property("id").eq("4");
       response.body.should.have.property("question").eq("how are you?");
-      response.body.should.have.property("user_id").eq(7);
+      response.body.should.have.property("user_id").eq(2);
     });
   });
 // get all questions
@@ -67,7 +67,7 @@ describe("GET /questions", () => {
     it("it should get all questions", async () => {
       let response = await chai
         .request(server)
-        .get("/Api/v1/questions/").set('x-auth-token', validToken)
+        .get("/api/v1/questions/").set('x-auth-token', validToken)
         .send(questionEntry);
       response.should.have.status(200);
       response.body.should.be.an("array");
@@ -89,13 +89,13 @@ describe("GET /questions/:id", () => {
     it("it should get a  question by id", async () => {
       let response = await chai
         .request(server)
-        .get("Api/v1/questions" + questionModel.id).set('x-auth-token',validToken)
+        .get("/api/v1/questions/" + questionModel.id).set('x-auth-token',validToken)
         .send();
       response.should.have.status(200);
       response.body.should.be.a("object");
       response.body.should.have.property("id").eq("4");
       response.body.should.have.property("question").eq("how are you?");
-      response.body.should.have.property("user_id").eq(7);
+      response.body.should.have.property("user_id").eq(2);
     });
   });
 
@@ -103,7 +103,7 @@ describe("GET /questions/:id", () => {
 describe("DELETE /question", () => {
     const invalidId = '0';
     const validId = '2';
-    const validUserId = 7;
+    const validUserId = 2;
   
     before("Setting stubs", () => {
       const deleteQuestionStub = sandbox.stub(models.question, "destroy");
@@ -126,7 +126,7 @@ describe("DELETE /question", () => {
     it("should fail if param id is invalid", async () => {
       let response = await chai
         .request(server)
-        .delete("Api/v1/questions/" + invalidId)
+        .delete("/api/v1/questions/" + invalidId)
         .set("x-auth-token", validToken)
         .send();
   
@@ -136,7 +136,7 @@ describe("DELETE /question", () => {
     it("should fail if owner id is invalid", async () => {
       let response = await chai
         .request(server)
-        .delete("Api/v1/questions/" + invalidId)
+        .delete("/api/v1/questions/" + invalidId)
         .set("x-auth-token", invalidId)
         .send();
   
@@ -146,7 +146,7 @@ describe("DELETE /question", () => {
     it("should pass if owner id is valid", async () => {
       let response = await chai
         .request(server)
-        .delete("Api/v1/questions/" + validId)
+        .delete("/api/v1/questions/" + validId)
         .set("x-auth-token", validToken)
         .send();
   
