@@ -1,6 +1,9 @@
 
 # Stackoverflow -lite
 
+[![Coverage Status](https://coveralls.io/repos/github/DamilareAlagbe/stackoverflow_lite/badge.svg?branch=main)](https://coveralls.io/github/DamilareAlagbe/stackoverflow_lite?branch=main)
+
+
 A question and answer platform where users can sign up,login,ask questions and get answers  
 
 
