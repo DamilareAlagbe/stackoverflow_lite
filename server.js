@@ -6,6 +6,9 @@ const answer = require("./routes/answer");
 const comment = require("./routes/comment");
 const app = express();
 
+const dotenv = require("dotenv").config();
+
+
 if (!config.get("jwtPrivateKey")) {
   console.log("FATAL ERROR : jwtprivatekey is not defined.");
   process.exit(1);
