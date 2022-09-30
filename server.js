@@ -9,7 +9,8 @@ const app = express();
 const dotenv = require("dotenv").config();
 
 
-if (!config.get("jwtPrivateKey")) {
+// if (!config.get("jwtPrivateKey")) {
+  if (!process.env.jwtPrivateKey) {
   console.log("FATAL ERROR : jwtprivatekey is not defined.");
   process.exit(1);
 }
