@@ -30,7 +30,8 @@ const addUser = async (req, res) => {
 
     // create user
     let User = await models.user.create(user);
-    const token = jwt.sign({ id: user.id }, config.get("jwtPrivateKey"));
+    // const token = jwt.sign({ id: user.id }, config.get("jwtPrivateKey"));
+    const token = jwt.sign({ id: user.id }, process.env.jwtPrivateKey);
     res
       .header("x-auth-token", token)
       .send(_.pick(User, ["id", "first_name", "email", "last_name"]));
@@ -52,7 +53,7 @@ const loginUser = async (req, res) => {
     if (!validPassword)
       return res.status(400).send("invalid email or password");
 
-    const token = jwt.sign({ id: user.id }, config.get("jwtPrivateKey"));
+    const token = jwt.sign({ id: user.id }, process.env.jwtPrivateKey);
     const pick = _.pick(user, ["id", "first_name", "email", "last_name"]);
     pick.token = token;
     res.status(200).send(pick);
