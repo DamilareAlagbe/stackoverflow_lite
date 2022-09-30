@@ -1,5 +1,6 @@
 /node_modules
-/config
+custom-environment-variables.json
+default.json 
 
 Skip to content
 Product
@@ -173,4 +174,3 @@ Training
 Blog
 About
 .nyc_output
-config
